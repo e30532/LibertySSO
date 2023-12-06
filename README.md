@@ -60,7 +60,6 @@ server.xml
 # podman tag simplesecure:latest 'default-route-openshift-image-registry.apps.*.*.*.*.com/defaulte/simplesecure'
 
 # vi /etc/containers/registries.conf
-```
 :
 :
 
@@ -70,7 +69,6 @@ insecure = true
 
 :
 :
-```
 
 # podman login -u kubeadmin -p $(oc whoami -t) https://default-route-openshift-image-registry.apps.*.*.*.*.com
 
@@ -90,6 +88,7 @@ simplesecure   default-route-openshift-image-registry.apps.*.*.*.*.com/defaulte/
 
 Now you will be able to access the application with the credential defined in server.xml. 
 https://simplesecure-defaulte.apps.*.*.*.*.com/SimpleSecureWeb/SimpleServlet
+
 
 
 The following steps describes how to use github enterprise as an identity provider.   
@@ -139,7 +138,10 @@ https://simplesecure-defaulte.apps.*.*.*.*.com/ibm/api/social-login/redirect/git
     </application>
 </server>
 ```
+I updated special-subject with ALL_AUTHENTICATED_USERS so that the github user can access the application. 
 
+
+And I also added SSO specific settings in Containerfile.
 ```
 FROM icr.io/appcafe/open-liberty
 COPY --chown=1001:0  SimpleSecure.ear /config/apps/SimpleSecure.ear
@@ -155,6 +157,7 @@ ENV SEC_IMPORT_K8S_CERTS=true
 
 RUN configure.sh
 ```
+
 
 ```
 # podman build -t simplesecure .
@@ -173,6 +176,75 @@ Now the request will be redirected to the github enterprise login page. After th
 
 Now you can add SSO with the external id provider WITHOUT any application change.   
 
+
+
+Lastly, I'll show you how we can separate SSO specific setting from your image by using Liberty Operator.   
+
+
+With the setting "SEC_SSO_PROVIDERS" and "TLS" in the container file, the image will become ready for SSO. To be more precise, SSO specific applications like "Social Login" will also be running on the container. 
+```
+FROM icr.io/appcafe/open-liberty
+COPY --chown=1001:0  SimpleSecure.ear /config/apps/SimpleSecure.ear
+COPY --chown=1001:0  server.xml /config/server.xml
+ARG VERBOSE=true
+ARG SEC_SSO_PROVIDERS="github"
+ARG TLS=true
+```
+
+
+```
+[12/6/23 14:27:07:128 UTC] 0000002c com.ibm.ws.security.social.internal.SocialLoginServiceImpl   I CWWKS5400I: The social login configuration [SocialLoginService] was successfully processed.
+[12/6/23 14:27:07:133 UTC] 0000002c com.ibm.ws.security.social.web.EndpointServices              I CWWKS5407I: The Social Login Version 1.0 endpoint service is activated.
+[12/6/23 14:27:07:135 UTC] 0000002c com.ibm.ws.security.social.internal.Oauth2LoginConfigImpl    I CWWKS5400I: The social login configuration [githubLogin] was successfully processed.
+[12/6/23 14:27:07:153 UTC] 0000002c com.ibm.ws.security.oauth20.web.OAuth20EndpointServices      I CWWKS1410I: The OAuth endpoint service is activated.
+
+[12/6/23 14:27:07:626 UTC] 00000065 com.ibm.ws.webcontainer.osgi.webapp.WebGroup                 I SRVE0169I: Loading Web Module: com.ibm.ws.security.jwt.
+[12/6/23 14:27:07:627 UTC] 00000066 com.ibm.ws.webcontainer.osgi.webapp.WebGroup                 I SRVE0169I: Loading Web Module: Social Login 1.0 Endpoint Servlet.
+[12/6/23 14:27:07:627 UTC] 00000067 com.ibm.ws.webcontainer.osgi.webapp.WebGroup                 I SRVE0169I: Loading Web Module: com.ibm.oauth.test.war.
+[12/6/23 14:27:07:628 UTC] 00000065 com.ibm.ws.webcontainer                                      I SRVE0250I: Web Module com.ibm.ws.security.jwt has been bound to default_host.
+[12/6/23 14:27:07:628 UTC] 00000066 com.ibm.ws.webcontainer                                      I SRVE0250I: Web Module Social Login 1.0 Endpoint Servlet has been bound to default_host.
+[12/6/23 14:27:07:628 UTC] 00000067 com.ibm.ws.webcontainer                                      I SRVE0250I: Web Module com.ibm.oauth.test.war has been bound to default_host.
+[12/6/23 14:27:07:628 UTC] 00000065 com.ibm.ws.http.internal.VirtualHostImpl                     A CWWKT0016I: Web application available (default_host): http://simplesecure-6f985f75f9-rxkbz:9080/jwt/
+[12/6/23 14:27:07:629 UTC] 00000066 com.ibm.ws.http.internal.VirtualHostImpl                     A CWWKT0016I: Web application available (default_host): http://simplesecure-6f985f75f9-rxkbz:9080/ibm/api/social-login/
+[12/6/23 14:27:07:630 UTC] 00000067 com.ibm.ws.http.internal.VirtualHostImpl                     A CWWKT0016I: Web application available (default_host): http://simplesecure-6f985f75f9-rxkbz:9080/oauth2/
+
+[12/6/23 14:27:07:784 UTC] 00000068 com.ibm.ws.webcontainer.osgi.webapp.WebGroup                 I SRVE0169I: Loading Web Module: SimpleSecureWeb.
+[12/6/23 14:27:07:785 UTC] 00000068 com.ibm.ws.webcontainer                                      I SRVE0250I: Web Module SimpleSecureWeb has been bound to default_host.
+[12/6/23 14:27:07:785 UTC] 00000068 com.ibm.ws.http.internal.VirtualHostImpl                     A CWWKT0016I: Web application available (default_host): http://simplesecure-6f985f75f9-rxkbz:9080/SimpleSecureWeb/
+
+[12/6/23 14:27:08:045 UTC] 00000039 com.ibm.ws.kernel.feature.internal.FeatureManager            A CWWKF0012I: The server installed the following features: [... socialLogin-1.0, ....].
+```
+
+For SEC_SSO_GITHUB_CLIENTID and SEC_SSO_GITHUB_CLIENTSECRET, we can specify this as a secret. The secret name should be <application_name>-olapp-sso. If you are using WebSphere operator, the name will be <application_name>-wlapp-sso. 
+
+```
+oc create secret generic simplesecure-olapp-sso --from-literal=github-clientId=b*********a --from-literal=github-clientSecret=0*****f
+
+```
+
+If you would like to specify other environment variables, you can specify them as spec.env of LibertyApplication CRD.
+
+```
+:
+:
+kind: OpenLibertyApplication
+metadata:
+  name: simplesecure
+  namespace: defaulte
+spec:
+  applicationImage: default-route-openshift-image-registry.apps.*.*.*.*.com/defaulte/simplesecure
+  env:
+    - name: SEC_TLS_TRUSTDEFAULTCERTS
+      value: "true"
+    - name: SEC_IMPORT_K8S_CERTS
+      value: "true"
+ :
+ :
+```
+
+Some of them might be configurable graphically through Operator.
+
+<img width="1008" alt="image" src="https://media.github.ibm.com/user/24674/files/41aa4f65-147e-4d21-9021-195b2640e29e">
 
 
 
