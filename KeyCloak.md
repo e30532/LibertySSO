@@ -217,23 +217,24 @@ https://jwt.io/
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/3fc71411-3a90-4c95-84e8-ca86cae4d564">  
 
 7. create a user  
-<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/190cb7e1-b637-4dbb-bfd0-80fa31bee082">. 
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/190cb7e1-b637-4dbb-bfd0-80fa31bee082">.
+
 Note!!! You need to specify a dummy email.   
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/925ed50e-efee-4236-a6d8-0ded27f314bb">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/be1aa1dc-0b86-4ba9-afac-d248f6031e33">  
 
-8. Link the user with the saml id provider  
+9. Link the user with the saml id provider  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/5c4d18c4-dcfb-4032-a9c2-0e44cb1d2130">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9e05f86d-7d8a-45af-8420-7d6e18002a81">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e34f4367-1b2c-4f1a-a3e2-ff6866222781">  
 
-9. download the id provider's metadata  
+10. download the id provider's metadata  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/626a7283-b129-42ad-9c7e-84a17635b4d9">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/c15bde16-4519-4395-b6d5-70cea6349616">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/4c9f49ce-caf7-4241-9e26-8c8461814b3a">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/23192aa7-b088-452c-9d95-849eeff7f606">  
 
-10. save the id provider's metadata in idpMetadata.xml under liberty server config/resources/security.   
+11. save the id provider's metadata in idpMetadata.xml under liberty server config/resources/security.   
 ```
 [root@c81981v1 bin]# vi ../usr/servers/keycloak/resources/security/idpMetadata.xml 
 [root@c81981v1 bin]# cat ../usr/servers/keycloak/resources/security/idpMetadata.xml
