@@ -1,6 +1,8 @@
 Here is the simplest step to configure keycloak as an identity manager for liberty's openid connector.
 
 
+## Setting up Keycloak
+
 1. Provision OCP cluster. (I used 4.15.3)
 2. create a secret
 
@@ -77,6 +79,8 @@ oc get secret example-keycloak-initial-admin -o jsonpath='{.data.username}' | ba
 oc get secret example-keycloak-initial-admin -o jsonpath='{.data.password}' | base64 --decode
 ```
 
+
+## OpenID connect
 7. create an Identify provider.
 <img width="1264" alt="image" src="https://media.github.ibm.com/user/24674/files/f130339a-18d8-4031-a7b3-00b8e7a2851e">
 toggle off "Use discovery endpoint".  
@@ -167,4 +171,6 @@ https://jwt.io/
 
 <img width="1202" alt="image" src="https://media.github.ibm.com/user/24674/files/b5206f64-a4df-4951-9bb0-213ddef75313">
 
+
+## SAML
 
