@@ -1,7 +1,7 @@
-Here is the simplest step to configure keycloak as an identity manager for liberty's openid connector.
+Here is the simplest step to configure keycloak as an identity manager for liberty's openid connector and SAML2.0.
 
 
-## Setting up Keycloak
+# Setting up Keycloak
 
 1. Provision OCP cluster. (I used 4.15.3)
 2. create a secret
@@ -39,11 +39,11 @@ secret/my-tls-secret created
 ```
 
 3. Install keycloak operator. 
-<img width="1201" alt="image" src="https://media.github.ibm.com/user/24674/files/9bddbd1b-4e7c-47f8-a978-76ff9ea0166f">. 
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/9bddbd1b-4e7c-47f8-a978-76ff9ea0166f">. 
 
 4. Create a keycloak instance.  
-<img width="835" alt="image" src="https://media.github.ibm.com/user/24674/files/0d228b61-7dcc-4605-8388-9e01cf3a0a1e">
-<img width="707" alt="image" src="https://media.github.ibm.com/user/24674/files/b9185f1f-682a-49c5-bc27-c40c629614c5">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/0d228b61-7dcc-4605-8388-9e01cf3a0a1e">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b9185f1f-682a-49c5-bc27-c40c629614c5">
 
 5. check the status
 ```
@@ -82,22 +82,22 @@ oc get secret example-keycloak-initial-admin -o jsonpath='{.data.password}' | ba
 
 ## OpenID connect
 7. create an Identify provider.
-<img width="1264" alt="image" src="https://media.github.ibm.com/user/24674/files/f130339a-18d8-4031-a7b3-00b8e7a2851e">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/f130339a-18d8-4031-a7b3-00b8e7a2851e">
 toggle off "Use discovery endpoint".  
-<img width="1001" alt="image" src="https://media.github.ibm.com/user/24674/files/b9e31ddf-6ddf-4937-bfe6-0593e00115b2">
-<img width="1016" alt="image" src="https://media.github.ibm.com/user/24674/files/3a580739-b801-439b-be1a-514531160f4d">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b9e31ddf-6ddf-4937-bfe6-0593e00115b2">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/3a580739-b801-439b-be1a-514531160f4d">
 
 8. create a client.
-<img width="948" alt="image" src="https://media.github.ibm.com/user/24674/files/d16c6977-5052-4a15-a7f2-bd53f204a7d2">
-<img width="981" alt="image" src="https://media.github.ibm.com/user/24674/files/f15683e2-650c-42a4-a0c5-0874e724c830">
-<img width="998" alt="image" src="https://media.github.ibm.com/user/24674/files/c9a4dd5e-851a-4f69-8932-8e469f82b16b">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/d16c6977-5052-4a15-a7f2-bd53f204a7d2">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/f15683e2-650c-42a4-a0c5-0874e724c830">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/c9a4dd5e-851a-4f69-8932-8e469f82b16b">
 
 
 9. create a user.
-<img width="1143" alt="image" src="https://media.github.ibm.com/user/24674/files/2c8044c3-4259-4711-b651-fb04eba1c3a2">
-<img width="817" alt="image" src="https://media.github.ibm.com/user/24674/files/7bf43a7b-dfdd-46fd-80d7-ddded9a15b6d">
-<img width="843" alt="image" src="https://media.github.ibm.com/user/24674/files/2a2d0d83-87e3-413a-979a-2d90102688b4">
-<img width="983" alt="image" src="https://media.github.ibm.com/user/24674/files/b6bfaea4-02d9-4bd8-aa5a-643face35174">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/2c8044c3-4259-4711-b651-fb04eba1c3a2">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/7bf43a7b-dfdd-46fd-80d7-ddded9a15b6d">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/2a2d0d83-87e3-413a-979a-2d90102688b4">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b6bfaea4-02d9-4bd8-aa5a-643face35174">
 
 10. configure a liberty server
 ```
@@ -133,7 +133,6 @@ toggle off "Use discovery endpoint".
 
 
 </server>
-
 ```
 
 11. add the keycloak certificate to the liberty's keystore and restart the liberty.
@@ -162,17 +161,19 @@ toggle off "Use discovery endpoint".
 https://***.***.ibm.com:9443/SimpleSecureWeb/SimpleServlet
 
 The request is redirected to the ID provider's login page.
-<img width="876" alt="image" src="https://media.github.ibm.com/user/24674/files/6dc812bf-dda6-42b6-b9d0-a622effecf57">
-<img width="649" alt="image" src="https://media.github.ibm.com/user/24674/files/91ff8736-c15c-4809-a6c2-a1e8ac7493d6">
-<img width="524" alt="image" src="https://media.github.ibm.com/user/24674/files/441391ac-80d4-4578-bb2a-e74e32e1e958">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/6dc812bf-dda6-42b6-b9d0-a622effecf57">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/91ff8736-c15c-4809-a6c2-a1e8ac7493d6">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/441391ac-80d4-4578-bb2a-e74e32e1e958">
 
 
 https://jwt.io/
 
-<img width="1202" alt="image" src="https://media.github.ibm.com/user/24674/files/b5206f64-a4df-4951-9bb0-213ddef75313">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b5206f64-a4df-4951-9bb0-213ddef75313">
 
 
-## SAML
+
+
+# SAML
 
 <img width="1285" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/d4b64abf-2f73-4d33-a8ae-376b9c269faa">  
 <img width="1087" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/beb7287b-267b-4562-83af-179a51aa28c8">
