@@ -210,20 +210,20 @@ https://jwt.io/
 ```
 
 4. download service metada.  
-<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e4b455ba-354b-4d47-b0a8-c92acb41b505">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e4b455ba-354b-4d47-b0a8-c92acb41b505">  
 
-6. create a client by using the service metada.  
+5. create a client by using the service metada.  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/040b4a74-7456-45a8-b681-4334fc5d1915">  
-<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/3fc71411-3a90-4c95-84e8-ca86cae4d564">  
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/3fc71411-3a90-4c95-84e8-ca86cae4d564">   
 
-7. create a user  
-<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/190cb7e1-b637-4dbb-bfd0-80fa31bee082">.
+6. create a user   
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/190cb7e1-b637-4dbb-bfd0-80fa31bee082">.  
 
 Note!!! You need to specify a dummy email.   
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/925ed50e-efee-4236-a6d8-0ded27f314bb">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/be1aa1dc-0b86-4ba9-afac-d248f6031e33">  
 
-9. Link the user with the saml id provider  
+9. Link the user with the saml id provider   
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/5c4d18c4-dcfb-4032-a9c2-0e44cb1d2130">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9e05f86d-7d8a-45af-8420-7d6e18002a81">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e34f4367-1b2c-4f1a-a3e2-ff6866222781">  
