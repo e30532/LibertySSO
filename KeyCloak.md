@@ -174,10 +174,12 @@ https://jwt.io/
 
 
 # SAML
+1. create a SAML id provider.   
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/d4b64abf-2f73-4d33-a8ae-376b9c269faa">  
+2. uncheck "Use entity descriptor" and specify "Single Sing-On service URL"
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/beb7287b-267b-4562-83af-179a51aa28c8">
 
-<img width="1285" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/d4b64abf-2f73-4d33-a8ae-376b9c269faa">  
-<img width="1087" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/beb7287b-267b-4562-83af-179a51aa28c8">
-
+3. enable samlWeb-2.0 feature on liberty and start the server. 
 ```
 [root@c81981v1 bin]# cat ../usr/servers/keycloak/server.xml 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -205,29 +207,43 @@ https://jwt.io/
     <pluginConfiguration pluginInstallRoot="/opt/IBM/WebSphere/Plugins90"/>
 </server>
 ```
-<img width="725" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e4b455ba-354b-4d47-b0a8-c92acb41b505">
-<img width="1008" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/040b4a74-7456-45a8-b681-4334fc5d1915">
-<img width="731" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/3fc71411-3a90-4c95-84e8-ca86cae4d564">
-<img width="900" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/190cb7e1-b637-4dbb-bfd0-80fa31bee082">
-<img width="871" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/925ed50e-efee-4236-a6d8-0ded27f314bb">
-<img width="911" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/be1aa1dc-0b86-4ba9-afac-d248f6031e33">
-<img width="702" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/5c4d18c4-dcfb-4032-a9c2-0e44cb1d2130">
-<img width="1079" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9e05f86d-7d8a-45af-8420-7d6e18002a81">
-<img width="562" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e34f4367-1b2c-4f1a-a3e2-ff6866222781">
-<img width="1122" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/626a7283-b129-42ad-9c7e-84a17635b4d9">
-<img width="998" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/c15bde16-4519-4395-b6d5-70cea6349616">
-<img width="862" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/4c9f49ce-caf7-4241-9e26-8c8461814b3a">
-<img width="921" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/23192aa7-b088-452c-9d95-849eeff7f606">
+4. download service metada.
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e4b455ba-354b-4d47-b0a8-c92acb41b505">
+5. create a client by using the service metada.
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/040b4a74-7456-45a8-b681-4334fc5d1915">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/3fc71411-3a90-4c95-84e8-ca86cae4d564">
+
+6. create a user
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/190cb7e1-b637-4dbb-bfd0-80fa31bee082">
+Note!!! You need to specify a dummy email. 
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/925ed50e-efee-4236-a6d8-0ded27f314bb">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/be1aa1dc-0b86-4ba9-afac-d248f6031e33">
+
+7. Link the user with the saml id provider
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/5c4d18c4-dcfb-4032-a9c2-0e44cb1d2130">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9e05f86d-7d8a-45af-8420-7d6e18002a81">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e34f4367-1b2c-4f1a-a3e2-ff6866222781">
+
+8. download the id provider's metadata
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/626a7283-b129-42ad-9c7e-84a17635b4d9">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/c15bde16-4519-4395-b6d5-70cea6349616">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/4c9f49ce-caf7-4241-9e26-8c8461814b3a">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/23192aa7-b088-452c-9d95-849eeff7f606">
+
+9. save the id provider's metadata in idpMetadata.xml under liberty server config/resources/security. 
 ```
 [root@c81981v1 bin]# vi ../usr/servers/keycloak/resources/security/idpMetadata.xml 
 [root@c81981v1 bin]# cat ../usr/servers/keycloak/resources/security/idpMetadata.xml
 <md:EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:md="urn:
 ```
-<img width="885" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/844614e3-9e35-4cdb-998d-1dde175df3f9">
-<img width="775" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/ba1562d3-9830-46ce-afd3-9af21cf730bc">
+
+
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/844614e3-9e35-4cdb-998d-1dde175df3f9">
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/ba1562d3-9830-46ce-afd3-9af21cf730bc">
 
 https://samltool.io/
-<img width="443" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/c7b7a05a-5687-4c18-a2a0-81433aa3a6bb">
+
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/c7b7a05a-5687-4c18-a2a0-81433aa3a6bb">
 
 
 
