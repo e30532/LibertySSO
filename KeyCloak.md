@@ -38,8 +38,8 @@ secret/my-tls-secret created
 [root@c81981v1 keycloak]# 
 ```
 
-3. Install keycloak operator. 
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/9bddbd1b-4e7c-47f8-a978-76ff9ea0166f">. 
+3. Install keycloak operator.  
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/9bddbd1b-4e7c-47f8-a978-76ff9ea0166f">.  
 
 4. Create a keycloak instance.  
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/0d228b61-7dcc-4605-8388-9e01cf3a0a1e">
