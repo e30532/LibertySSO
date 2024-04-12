@@ -161,14 +161,14 @@ toggle off "Use discovery endpoint".
 https://***.***.ibm.com:9443/SimpleSecureWeb/SimpleServlet
 
 The request is redirected to the ID provider's login page.   
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/6dc812bf-dda6-42b6-b9d0-a622effecf57">
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/91ff8736-c15c-4809-a6c2-a1e8ac7493d6">
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/441391ac-80d4-4578-bb2a-e74e32e1e958">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/6dc812bf-dda6-42b6-b9d0-a622effecf57">  
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/91ff8736-c15c-4809-a6c2-a1e8ac7493d6">  
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/441391ac-80d4-4578-bb2a-e74e32e1e958">  
 
 
 https://jwt.io/
 
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b5206f64-a4df-4951-9bb0-213ddef75313">
+<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b5206f64-a4df-4951-9bb0-213ddef75313">  
 
 
 
@@ -216,7 +216,7 @@ https://jwt.io/
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/040b4a74-7456-45a8-b681-4334fc5d1915">  
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/3fc71411-3a90-4c95-84e8-ca86cae4d564">   
 
-6. create a user   
+7. create a user   
 <img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/190cb7e1-b637-4dbb-bfd0-80fa31bee082">.  
 
 Note!!! You need to specify a dummy email.   
