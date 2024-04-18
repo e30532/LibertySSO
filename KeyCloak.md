@@ -312,7 +312,7 @@ cat: cat: No such file or directory
 
 4. import the service metadata as a keycloak client.  
 <img width="869" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/cead2d64-b758-4e87-a949-f30920ca8fbd"><br>
-Sicne SP initiated SSO is used in this scenario, specify "IDP-Initiated SSO URL name".   
+Sicne IDP initiated SSO is used in this scenario, specify "IDP-Initiated SSO URL name".   
 <img width="941" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/11f1d1c3-f8ac-428c-afaa-dce8f74a4d46"><br>
 
 5. create a SAML ID provider
@@ -356,6 +356,7 @@ https://example-keycloak.apps.apps.***.ibm.com/realms/master
 10. update the application's security role mapping with "All Authenticated in Trusted Realms" so that the user authenticated by keyclaok can acceess the secured application.
 <img width="889" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/1a739d08-1213-4ae1-b578-d992eae112c9"><br>
 
-
+11. Now you can access the IDP login page for the service. After the login at the keycloak side, the request will be redirected to the service(application on tWAS).   
+https://example-keycloak.apps.***.ibm.com/realms/master/protocol/saml/clients/was90
 
 
