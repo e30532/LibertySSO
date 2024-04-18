@@ -264,3 +264,98 @@ keytool -exportcert -rfc -alias default -file /tmp/ca-keycloak2.cert -keystore /
 
 /opt/IBM/HTTPServer90/bin/gskcapicmd -cert -add -db /opt/IBM/WebSphere/Plugins90//config/webserver1/plugin-key.kdb -stashed -label ca-keycloak -file /tmp/ca-keycloak.cert
 /opt/IBM/HTTPServer90/bin/gskcapicmd -cert -add -db /opt/IBM/WebSphere/Plugins90//config/webserver1/plugin-key.kdb -stashed -label ca-keycloak2 -file /tmp/ca-keycloak2.cert
+
+
+
+
+# SAML for tWAS
+You can also use the keycloak for tWAS SAML SSO with a few steps.   
+
+1. deploy "<WAS_ROOT>/installableApps/WebSphereSamlSP.ear". <br>
+<img width="891" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/0afe9812-9fa5-4e29-96e2-a05f39189787"><br>
+
+2. configure SAML TAI.
+<img width="887" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/5cff7dcd-9b92-4cb9-9c85-c6f509bf12af"><br>
+<img width="887" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/e1a8d828-6760-4ae4-88b9-1a23e57d5825"><br>
+```
+com.ibm.ws.security.web.saml.ACSTrustAssociationInterceptor
+```
+
+<img width="719" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/35cd133f-3425-4e97-88db-0c707b97b284"><br>
+```
+sso_1.sp.acsUrl : https://c8***.com/samlsps/acs
+sso_1.sp.idMap :  idAssertion
+```
+<img width="889" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/83359a88-2302-4b8a-a356-492fc092ffde"><br>
+```
+com.ibm.websphere.security.DeferTAItoSSO : com.ibm.ws.security.web.saml.ACSTrustAssociationInterceptor
+com.ibm.websphere.security.InvokeTAIbeforeSSO : com.ibm.ws.security.web.saml.ACSTrustAssociationInterceptor
+```
+
+3. export a service metadata file.
+```
+[root@c81981v1 bin]# ./wsadmin.sh -user admin -password admin
+WASX7209I: Connected to process "dmgr" on node c81981v1CellManager01 using SOAP connector;  The type of process is: DeploymentManager
+WASX7031I: For help, enter: "print Help.help()"
+wsadmin>AdminTask.exportSAMLSpMetadata('-spMetadataFileName /root/was_sp_metadata.xml -ssoId 1')
+u'true'
+wsadmin>quit
+[root@c81981v1 bin]# cat cat /root/was_sp_metadata.xml
+cat: cat: No such file or directory
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns7:EntityDescriptor xmlns="http://www.w3.org/2005/08/addressing" xmlns:ns2="http://docs.oasis-open.org/wsfed/federation/200706" xmlns:ns3="http://docs.oasis-open.org/wsfed/authorization/200706" xmlns:ns4="http://www.w3.org/2001/04/xmlenc#" xmlns:ns5="http://www.w3.org/2000/09/xmldsig#" xmlns:ns6="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:ns7="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ns8="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ns9="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" entityID="https://c81****.ibm.com/samlsps/acs">
+    <ns7:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <ns7:AssertionConsumerService index="0" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://c8****.ibm.com/samlsps/acs"/>
+    </ns7:SPSSODescriptor>
+</ns7:EntityDescriptor>
+```
+
+4. import the service metadata as a keycloak client.  
+<img width="869" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/cead2d64-b758-4e87-a949-f30920ca8fbd"><br>
+Sicne SP initiated SSO is used in this scenario, specify "IDP-Initiated SSO URL name".   
+<img width="941" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/11f1d1c3-f8ac-428c-afaa-dce8f74a4d46"><br>
+
+5. create a SAML ID provider
+<img width="1197" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/250c6fa9-4fd4-4110-b409-543f962857d5"><br>
+uncheck "Use entity descriptor" and specify "Single Sing-On service URL"
+
+6. create a user and associate the user with ID provider.
+<img width="1318" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/7893108d-bd01-45e9-b8e3-a29ed5308296"><br>
+<img width="1000" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/622d6160-b392-442c-b845-38e9a2c51e97"><br>
+<img width="975" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/834c1532-d487-4ce2-b04d-331dcfcac505"><br>
+
+7. download the IDP metadata and import it to tWAS. 
+<img width="811" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/86eaa818-55c0-47f7-bb78-36d71a9eff76"><br>
+```
+[root@c81981v1 bin]# vi /root/idp_metadata.xml
+[root@c81981v1 bin]# ./wsadmin.sh -user admin -password admin
+WASX7209I: Connected to process "dmgr" on node c81981v1CellManager01 using SOAP connector;  The type of process is: DeploymentManager
+WASX7031I: For help, enter: "print Help.help()"
+wsadmin>AdminTask.importSAMLIdpMetadata('-idpMetadataFileName /root/idp_metadata.xml -idpId 1 -ssoId 1 -signingCertAlias KC_cert')
+u'true'
+wsadmin>AdminConfig.save()
+u''
+wsadmin>quit
+```
+
+8. check the configuration. After adding the idp metadata, "sso_1.idp_1.SingleSignOnUrl" will be configured automatically. 
+<img width="715" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/015871b3-e5c0-40e6-a6b1-2d0e7e4d3651"><br>
+Note: I also configured "sso_1.sp.targetUrl" manually to avoid "INTERNAL ERROR: Please contact your support" error on the browser.  
+```
+sso_1.sp.targetUrl : https://c8***.ibm.com/SimpleSecureWeb/SimpleServlet 
+```
+keycloak certificate will be addeded to the trust store automatically.  
+<img width="850" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/8f04fc6b-a127-482f-9f4a-474c457e50fb"><br>
+
+9. add the keycloak realm as trusted.
+<img width="595" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/98b28808-dbda-4c0a-9d3e-cf3c585cad2d"><br>
+```
+https://example-keycloak.apps.apps.***.ibm.com/realms/master
+```
+
+10. update the application's security role mapping with "All Authenticated in Trusted Realms" so that the user authenticated by keyclaok can acceess the secured application.
+<img width="889" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/1a739d08-1213-4ae1-b578-d992eae112c9"><br>
+
+
+
+
