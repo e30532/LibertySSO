@@ -80,26 +80,28 @@ oc get secret example-keycloak-initial-admin -o jsonpath='{.data.password}' | ba
 ```
 
 
-## OpenID connect
-7. create an Identify provider.
+## OpenID connect configuration
+1. create an Identify provider.
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/f130339a-18d8-4031-a7b3-00b8e7a2851e">
 toggle off "Use discovery endpoint".  
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b9e31ddf-6ddf-4937-bfe6-0593e00115b2">
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/3a580739-b801-439b-be1a-514531160f4d">
 
-8. create a client.
+2. create a client.
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/d16c6977-5052-4a15-a7f2-bd53f204a7d2">
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/f15683e2-650c-42a4-a0c5-0874e724c830">
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/c9a4dd5e-851a-4f69-8932-8e469f82b16b">
 
 
-9. create a user.
+3. create a user.
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/2c8044c3-4259-4711-b651-fb04eba1c3a2">
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/7bf43a7b-dfdd-46fd-80d7-ddded9a15b6d">
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/2a2d0d83-87e3-413a-979a-2d90102688b4">
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b6bfaea4-02d9-4bd8-aa5a-643face35174">
 
-10. configure a liberty server
+
+## OpenID connect with Liberty
+1. configure a liberty server
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="new server">
@@ -135,12 +137,12 @@ toggle off "Use discovery endpoint".
 </server>
 ```
 
-11. add the keycloak certificate to the liberty's keystore and restart the liberty.
+2. add the keycloak certificate to the liberty's keystore and restart the liberty.
 ```
 /opt/IBM/WebSphere/AppServer90ND/java/8.0/bin/keytool -importcert -keystore ../usr/servers/keycloak/resources/security/key.p12 -storepass WebASWebAS -file /root/keycloak/certificate.pem
 ```
 
-12. deploy a secure application on liberty
+3. deploy a secure application on liberty
 ```
 [root@c81981v1 bin]# cat ../usr/servers/keycloak/apps/expanded/SimpleSecure.ear/META-INF/ibm-application-bnd.xml 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -157,7 +159,7 @@ toggle off "Use discovery endpoint".
 [root@c81981v1 bin]# 
 ```
 
-13. access the application
+4. access the application
 https://***.***.ibm.com:9443/SimpleSecureWeb/SimpleServlet
 
 The request is redirected to the ID provider's login page.   
@@ -172,15 +174,15 @@ https://jwt.io/
 
 
 
-## OpenID Connect on tWAS
+## OpenID Connect with tWAS
 1. deploy <WAS_ROOT>/installableApps/WebSphereOIDCRP.ear <br>
-<img width="890" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/4d9a39b5-4926-405e-9f6c-776142a81a98"><br>
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/4d9a39b5-4926-405e-9f6c-776142a81a98"><br>
 2. enable TAI<br>
-<img width="888" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/08d5e97d-40d0-4e40-9e7e-d68e06644442"><br>
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/08d5e97d-40d0-4e40-9e7e-d68e06644442"><br>
 3. Add "com.ibm.ws.security.oidc.client.RelyingParty"<br>
-<img width="861" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/bbb0aef7-060e-4204-b178-3f1d322628ed"><br>
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/bbb0aef7-060e-4204-b178-3f1d322628ed"><br>
 4. Add custom properties<br>
-<img width="715" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/2e948e40-7a13-4dd1-b4e8-283cfdd8b100"><br>
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/2e948e40-7a13-4dd1-b4e8-283cfdd8b100"><br>
 ```
 provider_1.clientId  : client01
 provider_1.clientSecret : client01
@@ -191,17 +193,20 @@ provider_1.authorizeEndpointUrl : https://example-keycloak.apps.*.com/realms/mas
 provider_1.tokenEndpointUrl : https://example-keycloak.apps.*.com/realms/master/protocol/openid-connect/token	
 provider_1.interceptedPathFilter : /.*
 ```
+5. add a keycloak server certificate.
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9ff31bbc-753b-424f-a41c-0c7fb7b37edc">
+
 5. set a redirect URL at keycloke side.<br>
 ```
 https://c89***.com:9443/oidcclient/signin_cb
 ```
-<img width="686" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9f7c0e4f-8953-485f-a0a9-3f183fdc2481"><br>
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9f7c0e4f-8953-485f-a0a9-3f183fdc2481"><br>
 
 6. add the keycloak realm as trusted.<br>
-<img width="720" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/1eef23d1-dcc9-4f41-b8a4-a74284e0b63c"><br>
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/1eef23d1-dcc9-4f41-b8a4-a74284e0b63c"><br>
 
 7. update the application's security role mapping with "All Authenticated in Trusted Realms" so that the user authenticated by keyclaok can acceess the secured application.<br>
-<img width="687" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/57d36475-5319-4681-b69e-35696ca1d5c8"><br>
+<img width="400" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/57d36475-5319-4681-b69e-35696ca1d5c8"><br>
 
 
 
@@ -300,7 +305,7 @@ keytool -exportcert -rfc -alias default -file /tmp/ca-keycloak2.cert -keystore /
 
 
 
-# SAML for tWAS
+# SAML with tWAS
 You can also use the keycloak for tWAS SAML SSO with a few steps.   
 
 1. deploy "<WAS_ROOT>/installableApps/WebSphereSamlSP.ear". <br>
