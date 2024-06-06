@@ -172,6 +172,38 @@ https://jwt.io/
 
 
 
+## OpenID Connect on tWAS
+1. deploy <WAS_ROOT>/installableApps/WebSphereOIDCRP.ear <br>
+<img width="890" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/4d9a39b5-4926-405e-9f6c-776142a81a98"><br>
+2. enable TAI<br>
+<img width="888" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/08d5e97d-40d0-4e40-9e7e-d68e06644442"><br>
+3. Add "com.ibm.ws.security.oidc.client.RelyingParty"<br>
+<img width="861" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/bbb0aef7-060e-4204-b178-3f1d322628ed"><br>
+4. Add custom properties<br>
+<img width="715" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/2e948e40-7a13-4dd1-b4e8-283cfdd8b100"><br>
+```
+provider_1.clientId  : client01
+provider_1.clientSecret : client01
+provider_1.signatureAlgorithm : RS256
+provider_1.jwkEndpointUrl : https://example-keycloak.apps.*.com/realms/master/protocol/openid-connect/certs
+provider_1.issuerIdentifier : https://example-keycloak.apps.*.com/realms/master
+provider_1.authorizeEndpointUrl : https://example-keycloak.apps.*.com/realms/master/protocol/openid-connect/auth
+provider_1.tokenEndpointUrl : https://example-keycloak.apps.*.com/realms/master/protocol/openid-connect/token	
+provider_1.interceptedPathFilter : /.*
+```
+5. set a redirect URL at keycloke side.<br>
+```
+https://c89***.com:9443/oidcclient/signin_cb
+```
+<img width="686" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/9f7c0e4f-8953-485f-a0a9-3f183fdc2481"><br>
+
+6. add the keycloak realm as trusted.<br>
+<img width="720" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/1eef23d1-dcc9-4f41-b8a4-a74284e0b63c"><br>
+
+7. update the application's security role mapping with "All Authenticated in Trusted Realms" so that the user authenticated by keyclaok can acceess the secured application.<br>
+<img width="687" alt="image" src="https://github.com/e30532/LibertySSO/assets/22098113/57d36475-5319-4681-b69e-35696ca1d5c8"><br>
+
+
 
 # SAML
 1. create a SAML id provider.   
