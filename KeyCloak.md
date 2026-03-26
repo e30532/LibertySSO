@@ -38,14 +38,15 @@ secret/my-tls-secret created
 [root@c81981v1 keycloak]# 
 ```
 
-3. Install keycloak operator.  
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/9bddbd1b-4e7c-47f8-a978-76ff9ea0166f">.  
+3. Install keycloak operator.
+<img width="397" height="198" alt="image" src="https://github.com/user-attachments/assets/2fb9fb8e-7a33-4b6b-9684-56dfc1793235" />    
 
-4. Create a keycloak instance.  
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/0d228b61-7dcc-4605-8388-9e01cf3a0a1e">
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b9185f1f-682a-49c5-bc27-c40c629614c5">
+4. Create a keycloak instance.
+<img width="407" height="224" alt="image" src="https://github.com/user-attachments/assets/51ecb9a6-1637-4147-8123-78fe40796084" />   
+<img width="404" height="282" alt="image" src="https://github.com/user-attachments/assets/40a9e0e1-d3fb-48c3-b29a-311193b5d6f4" />    
 
-5. check the status
+
+6. check the status
 ```
 [root@c81981v1 keycloak]# oc get all
 Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
@@ -81,11 +82,12 @@ oc get secret example-keycloak-initial-admin -o jsonpath='{.data.password}' | ba
 
 
 ## OpenID connect configuration
-1. create an Identify provider.
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/f130339a-18d8-4031-a7b3-00b8e7a2851e">
-toggle off "Use discovery endpoint".  
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b9e31ddf-6ddf-4937-bfe6-0593e00115b2">
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/3a580739-b801-439b-be1a-514531160f4d">
+1. create an Identify provider.   
+<img width="402" height="205" alt="image" src="https://github.com/user-attachments/assets/a247dfd3-3894-463e-aaa0-6cb897ef1591" />     
+toggle off "Use discovery endpoint".   
+<img width="395" height="225" alt="image" src="https://github.com/user-attachments/assets/2c1d1e82-2e03-4bc3-882b-4dd328074749" />   
+<img width="423" height="238" alt="image" src="https://github.com/user-attachments/assets/9fe4746e-468e-4546-ac09-3c3914ec37fb" />    
+
 
 2. create a client.
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/d16c6977-5052-4a15-a7f2-bd53f204a7d2">
@@ -93,11 +95,12 @@ toggle off "Use discovery endpoint".
 <img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/c9a4dd5e-851a-4f69-8932-8e469f82b16b">
 
 
-3. create a user.
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/2c8044c3-4259-4711-b651-fb04eba1c3a2">
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/7bf43a7b-dfdd-46fd-80d7-ddded9a15b6d">
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/2a2d0d83-87e3-413a-979a-2d90102688b4">
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b6bfaea4-02d9-4bd8-aa5a-643face35174">
+3. create a user.   
+<img width="406" height="169" alt="image" src="https://github.com/user-attachments/assets/7992fb09-0d5b-4ee5-ada2-d38d3bc4d7f9" />    
+<img width="403" height="294" alt="image" src="https://github.com/user-attachments/assets/1c1e04f6-8c33-4f44-9a70-002c982cc830" />   
+<img width="405" height="193" alt="image" src="https://github.com/user-attachments/assets/2ad4baef-a4e2-4d72-b6cc-c2ea5256f6e2" />    
+<img width="415" height="132" alt="image" src="https://github.com/user-attachments/assets/36cafbe2-59c1-4e61-bbb1-ca189a4d91e2" />    
+
 
 
 ## OpenID connect with Liberty
@@ -163,14 +166,13 @@ toggle off "Use discovery endpoint".
 https://***.***.ibm.com:9443/SimpleSecureWeb/SimpleServlet
 
 The request is redirected to the ID provider's login page.   
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/6dc812bf-dda6-42b6-b9d0-a622effecf57"><br>
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/91ff8736-c15c-4809-a6c2-a1e8ac7493d6"><br>
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/441391ac-80d4-4578-bb2a-e74e32e1e958"><br>
+<img width="406" height="217" alt="image" src="https://github.com/user-attachments/assets/b7856ecb-fa2c-4294-92d5-9c9853e4328b" />     
+<img width="407" height="407" alt="image" src="https://github.com/user-attachments/assets/a106ca2e-daf6-4da3-b783-fed6badbb5b6" />    
+<img width="412" height="72" alt="image" src="https://github.com/user-attachments/assets/abb4d62d-3d32-4146-a312-e8352fa85fd1" />   
 
+https://jwt.io/    
 
-https://jwt.io/
-
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/b5206f64-a4df-4951-9bb0-213ddef75313"><br>
+<img width="384" height="153" alt="image" src="https://github.com/user-attachments/assets/63322e7a-5f56-4214-be48-72b980ba02d9" />    
 
 
 
