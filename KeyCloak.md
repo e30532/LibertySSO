@@ -81,18 +81,19 @@ oc get secret example-keycloak-initial-admin -o jsonpath='{.data.password}' | ba
 ```
 
 
-## OpenID connect configuration
-1. create an Identify provider.   
-<img width="402" height="205" alt="image" src="https://github.com/user-attachments/assets/a247dfd3-3894-463e-aaa0-6cb897ef1591" />     
-toggle off "Use discovery endpoint".    
-<img width="395" height="225" alt="image" src="https://github.com/user-attachments/assets/2c1d1e82-2e03-4bc3-882b-4dd328074749" />    
-<img width="423" height="238" alt="image" src="https://github.com/user-attachments/assets/9fe4746e-468e-4546-ac09-3c3914ec37fb" />     
+## OpenID connect configuration    
+1. create an Identify provider.      
+<img width="402" height="205" alt="image" src="https://github.com/user-attachments/assets/a247dfd3-3894-463e-aaa0-6cb897ef1591" />       
+toggle off "Use discovery endpoint".       
+<img width="395" height="225" alt="image" src="https://github.com/user-attachments/assets/2c1d1e82-2e03-4bc3-882b-4dd328074749" />      
+<img width="423" height="238" alt="image" src="https://github.com/user-attachments/assets/9fe4746e-468e-4546-ac09-3c3914ec37fb" />       
 
 
-2. create a client.
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/d16c6977-5052-4a15-a7f2-bd53f204a7d2">    
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/f15683e2-650c-42a4-a0c5-0874e724c830">    
-<img width="400" alt="image" src="https://media.github.ibm.com/user/24674/files/c9a4dd5e-851a-4f69-8932-8e469f82b16b">   
+2. create a client.    
+<img width="405" height="141" alt="image" src="https://github.com/user-attachments/assets/91aa7e48-55d5-4846-8b01-2de0820a7573" />     
+<img width="398" height="194" alt="image" src="https://github.com/user-attachments/assets/cbf30779-ec71-44c2-b2e1-ff31de0e11c7" />      
+<img width="402" height="241" alt="image" src="https://github.com/user-attachments/assets/d628d61d-f109-4c24-b1a2-23b62dcf2714" />     
+
 
 
 3. create a user.   
